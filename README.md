@@ -1,4 +1,4 @@
-# java-assigment
+# README - OBJECTIVE
 
 You need to design and implement a Java program with a simple window interface (buttons, text
 boxes, etc.) that generates an encoded version of a user-provided string. The encoding process
