@@ -1,5 +1,5 @@
 # java-assigment
-Objective
+
 You need to design and implement a Java program with a simple window interface (buttons, text
 boxes, etc.) that generates an encoded version of a user-provided string. The encoding process
 will use a unique, hidden group-specific shift key embedded within the code. This ensuresthat the
