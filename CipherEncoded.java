@@ -31,10 +31,10 @@ public class Encoded {
     }
 
     // ============================================================
-    // MEMBER 2 — Security Specialist  |  Contributed by: [Your Name]
+    // MEMBER 2 — Security Specialist  |  Contributed by: Izz
     // ============================================================
 
-    // Counts all non-space characters. Contributed by: [Your Name]
+    // Counts all non-space characters. Contributed by: Izz
     public int countCharacters(String inputText) {
         int count = 0;
         for (int i = 0; i < inputText.length(); i++)
@@ -43,7 +43,7 @@ public class Encoded {
         return count;
     }
 
-    // Caesar-style cipher for letters and digits. Contributed by: [Your Name]
+    // Caesar-style cipher for letters and digits. Contributed by: Izz
     public void applyCipher() {
         int finalShift = generateShift();               // e.g., 15 for this group
         this.charCount = countCharacters(this.inputText);
