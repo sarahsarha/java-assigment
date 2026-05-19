@@ -1,0 +1,72 @@
+// ============================================================
+// Assignment.java  (MAIN FILE)
+// GUI for Encoding Program using Swing
+// ============================================================
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Assignment extends JFrame {
+
+    private JTextField inputField;
+    private JTextArea outputArea;
+    private JButton encodeButton;
+
+    public Assignment() {
+
+        setTitle("String Encoder");
+        setSize(500, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // ------------------ Top Panel (Input) ------------------
+        JPanel topPanel = new JPanel();
+        topPanel.add(new JLabel("Enter text:"));
+        inputField = new JTextField(20);
+        topPanel.add(inputField);
+
+        encodeButton = new JButton("Encode");
+        topPanel.add(encodeButton);
+
+        add(topPanel, BorderLayout.NORTH);
+
+        // ------------------ Output Area ------------------
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        add(new JScrollPane(outputArea), BorderLayout.CENTER);
+
+        // ------------------ Button Action ------------------
+        encodeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String text = inputField.getText();
+                Encoded encoder = new Encoded(text);
+
+                if (!encoder.checkStringValidity(text)) {
+                    JOptionPane.showMessageDialog(null,
+                        "Invalid input! Use lowercase letters, numbers and spaces only.");
+                    return;
+                }
+
+                int charCount = encoder.countCharacters(text);
+                int groupShift = encoder.generateShift();
+                int finalShift = groupShift + charCount;
+
+                String result = encoder.applyCipher(text, finalShift);
+
+                outputArea.setText(
+                    "Non-space characters: " + charCount +
+                    "\nFinal Shift: " + finalShift +
+                    "\nEncoded Result: " + result +
+                    "\n\nEncoding completed successfully!"
+                );
+            }
+        });
+    }
+
+    // ------------------ MAIN METHOD ------------------
+    public static void main(String[] args) {
+        new Assignment().setVisible(true);
+    }
+}
