@@ -1,0 +1,141 @@
+// ============================================================
+// Assignment.java
+// GUI Version
+// ============================================================
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+
+public class Assignment extends JFrame {
+
+    private JTextField txtInput;
+    private JTextArea txtOutput;
+    private JButton btnEncode;
+    private JButton btnClear;
+
+    public Assignment() {
+
+        // Window Settings
+        setTitle("String Encoder System");
+        setSize(700, 450);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Main Panel
+        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
+        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        // ==========================
+        // Title
+        // ==========================
+        JLabel lblTitle = new JLabel("STRING ENCODER SYSTEM", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 22));
+
+        // ==========================
+        // Input Section
+        // ==========================
+        JPanel inputPanel = new JPanel(new FlowLayout());
+
+        JLabel lblInput = new JLabel("Enter Text:");
+
+        txtInput = new JTextField(25);
+        txtInput.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        btnEncode = new JButton("Encode");
+        btnClear = new JButton("Clear");
+
+        inputPanel.add(lblInput);
+        inputPanel.add(txtInput);
+        inputPanel.add(btnEncode);
+        inputPanel.add(btnClear);
+
+        // ==========================
+        // Output Section
+        // ==========================
+        txtOutput = new JTextArea();
+        txtOutput.setEditable(false);
+        txtOutput.setFont(new Font("Consolas", Font.PLAIN, 15));
+
+        JScrollPane scrollPane = new JScrollPane(txtOutput);
+
+        // ==========================
+        // Footer
+        // ==========================
+        JLabel lblFooter = new JLabel(
+                "TMF2954 Java Programming Assignment",
+                SwingConstants.CENTER);
+
+        // ==========================
+        // Add Components
+        // ==========================
+        JPanel topSection = new JPanel();
+        topSection.setLayout(new BorderLayout());
+
+        topSection.add(lblTitle, BorderLayout.NORTH);
+        topSection.add(inputPanel, BorderLayout.CENTER);
+
+        mainPanel.add(topSection, BorderLayout.NORTH);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(mainPanel, BorderLayout.CENTER);
+        add(lblFooter, BorderLayout.SOUTH);
+
+        // ==========================
+        // Encode Button
+        // ==========================
+        btnEncode.addActionListener(e -> {
+
+            String input = txtInput.getText().trim();
+
+            Encoded encoder = new Encoded(input);
+
+            if (!encoder.checkStringValidity(input)) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid Input!\n\nPlease enter:\n• lowercase letters (a-z)\n• digits (0-9)\n• spaces only",
+                        "Input Error",
+                        JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+
+            int charCount = encoder.countCharacters(input);
+
+            int groupShift = encoder.generateShift();
+
+            int finalShift = groupShift + charCount;
+
+            String encodedResult =
+                    encoder.applyCipher(input, finalShift);
+
+            txtOutput.setText(
+                    "========= ENCODING RESULT =========\n\n" +
+                    "Original Text        : " + input +
+                    "\nNon-space Characters : " + charCount +
+                    "\nFinal Shift Value    : " + finalShift +
+                    "\n\nEncoded Text:\n" +
+                    encodedResult +
+                    "\n\n==================================\n" +
+                    "Encoding completed successfully."
+            );
+        });
+
+        // ==========================
+        // Clear Button
+        // ==========================
+        btnClear.addActionListener(e -> {
+            txtInput.setText("");
+            txtOutput.setText("");
+        });
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(() -> {
+            new Assignment().setVisible(true);
+        });
+    }
+}
